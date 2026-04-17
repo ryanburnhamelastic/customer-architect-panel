@@ -8,6 +8,7 @@
 
 | File | Description |
 |------|-------------|
+| [diagrams/goes-current-state-architecture.svg](diagrams/goes-current-state-architecture.svg) | GOES current-state on-premises architecture diagram |
 | [sample-data/apache_access.log](sample-data/apache_access.log) | Apache access log file used in Exercise 1 (Logstash ingestion) |
 | [logstash/pipeline.conf](logstash/pipeline.conf) | Logstash pipeline configuration template for Exercise 1 |
 
@@ -79,6 +80,10 @@ High availability and resiliency are non-negotiable. Significant downtime direct
 
 #### Innovation Mindset
 Culture of frequent experimentation. Architecture must support **rapid changes and deployments**.
+
+### Current State Architecture
+
+![GOES Current State Architecture](diagrams/goes-current-state-architecture.svg)
 
 ### Deliverable
 

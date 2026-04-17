@@ -1,0 +1,292 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" font-family="Arial, sans-serif" font-size="12">
+
+  <!-- Background -->
+  <rect width="1100" height="680" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="550" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">GOES — Current State Architecture (On-Premises)</text>
+  <text x="550" y="52" text-anchor="middle" font-size="12" fill="#555">Global Online E-Commerce and Streaming Content Provider</text>
+
+  <!-- ═══════════════════════════════════════════════════
+       LEFT: AMERICAS CUSTOMER
+  ═══════════════════════════════════════════════════ -->
+  <g id="customer-americas">
+    <rect x="20" y="80" width="140" height="130" rx="8" fill="#e8f4fd" stroke="#2980b9" stroke-width="1.5"/>
+    <text x="90" y="100" text-anchor="middle" font-weight="bold" fill="#2980b9">Customer</text>
+    <text x="90" y="116" text-anchor="middle" fill="#555">(Americas)</text>
+    <!-- Browser icon -->
+    <rect x="55" y="122" width="70" height="45" rx="4" fill="white" stroke="#aaa" stroke-width="1"/>
+    <rect x="55" y="122" width="70" height="10" rx="4" fill="#2980b9"/>
+    <text x="90" y="131" text-anchor="middle" font-size="9" fill="white">Browser</text>
+    <text x="90" y="148" text-anchor="middle" font-size="9" fill="#333">Login / Search</text>
+    <text x="90" y="160" text-anchor="middle" font-size="9" fill="#333">Shopping Cart</text>
+    <text x="90" y="172" text-anchor="middle" font-size="9" fill="#333">Streaming Content</text>
+    <!-- Payments badge -->
+    <rect x="45" y="190" width="90" height="16" rx="3" fill="#fff3cd" stroke="#f39c12" stroke-width="1"/>
+    <text x="90" y="202" text-anchor="middle" font-size="9" fill="#856404">Payments</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════
+       RIGHT: EUROPE CUSTOMER
+  ═══════════════════════════════════════════════════ -->
+  <g id="customer-europe">
+    <rect x="940" y="80" width="140" height="130" rx="8" fill="#e8f4fd" stroke="#2980b9" stroke-width="1.5"/>
+    <text x="1010" y="100" text-anchor="middle" font-weight="bold" fill="#2980b9">Customer</text>
+    <text x="1010" y="116" text-anchor="middle" fill="#555">(Europe)</text>
+    <rect x="975" y="122" width="70" height="45" rx="4" fill="white" stroke="#aaa" stroke-width="1"/>
+    <rect x="975" y="122" width="70" height="10" rx="4" fill="#2980b9"/>
+    <text x="1010" y="131" text-anchor="middle" font-size="9" fill="white">Browser</text>
+    <text x="1010" y="148" text-anchor="middle" font-size="9" fill="#333">Login / Search</text>
+    <text x="1010" y="160" text-anchor="middle" font-size="9" fill="#333">Shopping Cart</text>
+    <text x="1010" y="172" text-anchor="middle" font-size="9" fill="#333">Streaming Content</text>
+    <rect x="965" y="190" width="90" height="16" rx="3" fill="#fff3cd" stroke="#f39c12" stroke-width="1"/>
+    <text x="1010" y="202" text-anchor="middle" font-size="9" fill="#856404">Payments</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════
+       DATA CENTER: NORTH AMERICA
+  ═══════════════════════════════════════════════════ -->
+  <g id="dc-na">
+    <rect x="175" y="70" width="330" height="510" rx="10" fill="#eafaf1" stroke="#27ae60" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="340" y="92" text-anchor="middle" font-weight="bold" font-size="13" fill="#27ae60">GOES Data Center — North America</text>
+
+    <!-- Firewall -->
+    <rect x="265" y="105" width="150" height="36" rx="6" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+    <text x="340" y="128" text-anchor="middle" font-weight="bold" fill="#c0392b">Firewall</text>
+
+    <!-- Load Balancer 1 -->
+    <rect x="285" y="158" width="110" height="30" rx="6" fill="#f5cba7" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="340" y="178" text-anchor="middle" fill="#784212">Load Balancer</text>
+
+    <!-- Web Servers -->
+    <g id="web-na">
+      <rect x="215" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="246" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+      <rect x="283" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="314" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+      <rect x="351" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="382" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+    </g>
+
+    <!-- Load Balancer 2 (API tier) -->
+    <rect x="285" y="248" width="110" height="30" rx="6" fill="#f5cba7" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="340" y="268" text-anchor="middle" fill="#784212">Load Balancer</text>
+
+    <!-- API Servers -->
+    <g id="api-na">
+      <rect x="215" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="243" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+      <rect x="283" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="311" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+      <rect x="351" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="379" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+    </g>
+
+    <!-- Databases -->
+    <g id="db-na">
+      <ellipse cx="248" cy="385" rx="45" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <rect x="203" y="385" width="90" height="35" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <ellipse cx="248" cy="420" rx="45" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="248" y="408" text-anchor="middle" font-size="9" fill="#4a235a">Media</text>
+
+      <ellipse cx="360" cy="385" rx="50" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <rect x="310" y="385" width="100" height="35" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <ellipse cx="360" cy="420" rx="50" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="360" y="403" text-anchor="middle" font-size="9" fill="#4a235a">Customer</text>
+      <text x="360" y="414" text-anchor="middle" font-size="9" fill="#4a235a">Products</text>
+      <text x="360" y="425" text-anchor="middle" font-size="9" fill="#4a235a">Orders</text>
+    </g>
+
+    <!-- GDPR badge -->
+    <rect x="273" y="447" width="130" height="18" rx="4" fill="#fdfefe" stroke="#e74c3c" stroke-width="1.5"/>
+    <text x="338" y="460" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">GDPR Compliant</text>
+
+    <!-- Payment Processor NA -->
+    <rect x="195" y="475" width="120" height="50" rx="6" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+    <text x="255" y="495" text-anchor="middle" font-size="10" fill="#784212" font-weight="bold">Payment Processor</text>
+    <text x="255" y="508" text-anchor="middle" font-size="10" fill="#784212">North America</text>
+    <rect x="207" y="512" width="96" height="10" rx="3" fill="#fce4b3" stroke="#f39c12" stroke-width="1"/>
+    <text x="255" y="521" text-anchor="middle" font-size="8" fill="#784212">PCI Compliant</text>
+
+    <!-- Payment Validation label -->
+    <text x="340" y="548" text-anchor="middle" font-size="10" fill="#555" font-style="italic">Payment Validation</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════
+       DATA CENTER: EUROPE
+  ═══════════════════════════════════════════════════ -->
+  <g id="dc-eu">
+    <rect x="595" y="70" width="330" height="510" rx="10" fill="#eafaf1" stroke="#27ae60" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="760" y="92" text-anchor="middle" font-weight="bold" font-size="13" fill="#27ae60">GOES Data Center — Europe</text>
+
+    <!-- Firewall -->
+    <rect x="685" y="105" width="150" height="36" rx="6" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+    <text x="760" y="128" text-anchor="middle" font-weight="bold" fill="#c0392b">Firewall</text>
+
+    <!-- Load Balancer 1 -->
+    <rect x="705" y="158" width="110" height="30" rx="6" fill="#f5cba7" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="760" y="178" text-anchor="middle" fill="#784212">Load Balancer</text>
+
+    <!-- Web Servers -->
+    <g id="web-eu">
+      <rect x="635" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="666" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+      <rect x="703" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="734" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+      <rect x="771" y="206" width="62" height="28" rx="4" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+      <text x="802" y="224" text-anchor="middle" font-size="10" fill="#1a5276">Web Server</text>
+    </g>
+
+    <!-- Load Balancer 2 (API tier) -->
+    <rect x="705" y="248" width="110" height="30" rx="6" fill="#f5cba7" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="760" y="268" text-anchor="middle" fill="#784212">Load Balancer</text>
+
+    <!-- API Servers -->
+    <g id="api-eu">
+      <rect x="635" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="663" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+      <rect x="703" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="731" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+      <rect x="771" y="292" width="56" height="28" rx="4" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+      <text x="799" y="310" text-anchor="middle" font-size="11" fill="#1e8449">API</text>
+    </g>
+
+    <!-- Databases -->
+    <g id="db-eu">
+      <ellipse cx="668" cy="385" rx="45" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <rect x="623" y="385" width="90" height="35" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <ellipse cx="668" cy="420" rx="45" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="668" y="408" text-anchor="middle" font-size="9" fill="#4a235a">Media</text>
+
+      <ellipse cx="780" cy="385" rx="50" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <rect x="730" y="385" width="100" height="35" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <ellipse cx="780" cy="420" rx="50" ry="18" fill="#d2b4de" stroke="#8e44ad" stroke-width="1.5"/>
+      <text x="780" y="403" text-anchor="middle" font-size="9" fill="#4a235a">Customer</text>
+      <text x="780" y="414" text-anchor="middle" font-size="9" fill="#4a235a">Products</text>
+      <text x="780" y="425" text-anchor="middle" font-size="9" fill="#4a235a">Orders</text>
+    </g>
+
+    <!-- GDPR badge -->
+    <rect x="693" y="447" width="130" height="18" rx="4" fill="#fdfefe" stroke="#e74c3c" stroke-width="1.5"/>
+    <text x="758" y="460" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">GDPR Compliant</text>
+
+    <!-- Payment Processor EU -->
+    <rect x="785" y="475" width="120" height="50" rx="6" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+    <text x="845" y="495" text-anchor="middle" font-size="10" fill="#784212" font-weight="bold">Payment Processor</text>
+    <text x="845" y="508" text-anchor="middle" font-size="10" fill="#784212">Europe</text>
+    <rect x="797" y="512" width="96" height="10" rx="3" fill="#fce4b3" stroke="#f39c12" stroke-width="1"/>
+    <text x="845" y="521" text-anchor="middle" font-size="8" fill="#784212">PCI Compliant</text>
+
+    <!-- Payment Validation label -->
+    <text x="760" y="548" text-anchor="middle" font-size="10" fill="#555" font-style="italic">Payment Validation</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════
+       BI-DIRECTIONAL VPN REPLICATION (CENTER)
+  ═══════════════════════════════════════════════════ -->
+  <g id="vpn-center">
+    <rect x="470" y="285" width="160" height="56" rx="8" fill="#fdfefe" stroke="#7f8c8d" stroke-width="1.5"/>
+    <text x="550" y="308" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c3e50">Bi-Directional</text>
+    <text x="550" y="322" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c3e50">Data Replication</text>
+    <text x="550" y="336" text-anchor="middle" font-size="10" fill="#555">Over VPN</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════
+       ARROWS
+  ═══════════════════════════════════════════════════ -->
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2980b9"/>
+    </marker>
+    <marker id="arrowhead-rev" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+      <polygon points="8 0, 0 3, 8 6" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Customer Americas → DC NA (firewall) -->
+  <line x1="160" y1="145" x2="255" y2="123" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+  <!-- DC NA → Customer Americas (return) -->
+  <line x1="255" y1="133" x2="160" y2="155" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+
+  <!-- Customer Europe → DC EU (firewall) -->
+  <line x1="940" y1="145" x2="845" y2="123" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+  <!-- DC EU → Customer Europe (return) -->
+  <line x1="845" y1="133" x2="940" y2="155" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+
+  <!-- Firewall → LB1 NA -->
+  <line x1="340" y1="141" x2="340" y2="158" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <!-- LB1 → Web Servers NA -->
+  <line x1="340" y1="188" x2="277" y2="206" stroke="#555" stroke-width="1"/>
+  <line x1="340" y1="188" x2="340" y2="206" stroke="#555" stroke-width="1"/>
+  <line x1="340" y1="188" x2="382" y2="206" stroke="#555" stroke-width="1"/>
+  <!-- Web → LB2 NA -->
+  <line x1="340" y1="234" x2="340" y2="248" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <!-- LB2 → APIs NA -->
+  <line x1="340" y1="278" x2="271" y2="292" stroke="#555" stroke-width="1"/>
+  <line x1="340" y1="278" x2="311" y2="292" stroke="#555" stroke-width="1"/>
+  <line x1="340" y1="278" x2="379" y2="292" stroke="#555" stroke-width="1"/>
+  <!-- APIs → DB NA -->
+  <line x1="280" y1="320" x2="265" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="340" y1="320" x2="340" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="380" y1="320" x2="370" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+  <!-- Firewall → LB1 EU -->
+  <line x1="760" y1="141" x2="760" y2="158" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <!-- LB1 → Web Servers EU -->
+  <line x1="760" y1="188" x2="697" y2="206" stroke="#555" stroke-width="1"/>
+  <line x1="760" y1="188" x2="760" y2="206" stroke="#555" stroke-width="1"/>
+  <line x1="760" y1="188" x2="802" y2="206" stroke="#555" stroke-width="1"/>
+  <!-- Web → LB2 EU -->
+  <line x1="760" y1="234" x2="760" y2="248" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <!-- LB2 → APIs EU -->
+  <line x1="760" y1="278" x2="691" y2="292" stroke="#555" stroke-width="1"/>
+  <line x1="760" y1="278" x2="731" y2="292" stroke="#555" stroke-width="1"/>
+  <line x1="760" y1="278" x2="799" y2="292" stroke="#555" stroke-width="1"/>
+  <!-- APIs → DB EU -->
+  <line x1="700" y1="320" x2="685" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="760" y1="320" x2="760" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="800" y1="320" x2="790" y2="367" stroke="#555" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+  <!-- VPN bi-directional arrows -->
+  <line x1="505" y1="313" x2="470" y2="313" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-rev)"/>
+  <line x1="630" y1="313" x2="595" y2="313" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-rev)"/>
+
+  <!-- Payment flows NA -->
+  <line x1="255" y1="505" x2="235" y2="530" stroke="#f39c12" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="195" y="560" font-size="9" fill="#784212">Accepts &amp; Processes Payments</text>
+
+  <!-- Payment flows EU -->
+  <line x1="785" y1="505" x2="805" y2="530" stroke="#f39c12" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="808" y="560" font-size="9" fill="#784212">Accepts &amp; Processes Payments</text>
+
+  <!-- ═══════════════════════════════════════════════════
+       LEGEND
+  ═══════════════════════════════════════════════════ -->
+  <g id="legend">
+    <rect x="20" y="610" width="600" height="60" rx="6" fill="white" stroke="#ddd" stroke-width="1"/>
+    <text x="35" y="628" font-size="11" font-weight="bold" fill="#333">Legend</text>
+    <rect x="35" y="635" width="14" height="10" rx="2" fill="#d6eaf8" stroke="#2980b9" stroke-width="1"/>
+    <text x="55" y="645" font-size="10" fill="#333">Web / App Servers</text>
+    <rect x="145" y="635" width="14" height="10" rx="2" fill="#d5f5e3" stroke="#27ae60" stroke-width="1"/>
+    <text x="165" y="645" font-size="10" fill="#333">API Layer</text>
+    <rect x="235" y="635" width="14" height="10" rx="2" fill="#d2b4de" stroke="#8e44ad" stroke-width="1"/>
+    <text x="255" y="645" font-size="10" fill="#333">Data / Storage</text>
+    <rect x="345" y="635" width="14" height="10" rx="2" fill="#fef9e7" stroke="#f39c12" stroke-width="1"/>
+    <text x="365" y="645" font-size="10" fill="#333">Payment Processing (PCI)</text>
+    <rect x="505" y="635" width="14" height="10" rx="2" fill="#e74c3c" opacity="0.3" stroke="#e74c3c" stroke-width="1"/>
+    <text x="525" y="645" font-size="10" fill="#333">Firewall</text>
+
+    <line x1="35" y1="660" x2="65" y2="660" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowhead-blue)"/>
+    <text x="70" y="664" font-size="10" fill="#333">Customer Traffic</text>
+    <line x1="175" y1="660" x2="205" y2="660" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="210" y="664" font-size="10" fill="#333">Internal Traffic</text>
+    <line x1="305" y1="660" x2="335" y2="660" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-rev)"/>
+    <text x="340" y="664" font-size="10" fill="#333">Bi-Dir VPN Replication</text>
+    <line x1="475" y1="660" x2="505" y2="660" stroke="#f39c12" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrowhead)"/>
+    <text x="510" y="664" font-size="10" fill="#333">Payment Flow</text>
+  </g>
+
+</svg>
