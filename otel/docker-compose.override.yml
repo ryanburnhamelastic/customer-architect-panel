@@ -1,0 +1,28 @@
+# otel/docker-compose.override.yml
+#
+# Copy this file AND otel/collector-config.yml into the root of your
+# opentelemetry-demo/ directory, then run:
+#
+#   docker compose up --detach
+#
+# Docker Compose automatically picks up docker-compose.override.yml and
+# merges it with the base docker-compose.yml — no extra flags needed.
+#
+# This override mounts collector-config.yml into the otelcol service,
+# replacing the demo's default Jaeger/Prometheus exporter config with
+# one that routes telemetry to Elastic Cloud.
+#
+# ─── Fallback (if the mount conflict causes issues) ───────────────────────
+# Some Docker Desktop versions handle duplicate bind-mounts unpredictably.
+# If otelcol fails to start, skip this override file entirely and instead
+# copy collector-config.yml directly over the demo's own config:
+#
+#   cp collector-config.yml src/otelcollector/otelcol-config.yml
+#
+# Then run docker compose up as normal (no override file needed).
+# ──────────────────────────────────────────────────────────────────────────
+
+services:
+  otelcol:
+    volumes:
+      - ./collector-config.yml:/etc/otelcol-config.yml

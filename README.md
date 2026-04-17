@@ -12,6 +12,8 @@
 | [diagrams/goes-current-state-architecture.svg](diagrams/goes-current-state-architecture.svg) | GOES current-state on-premises architecture diagram |
 | [sample-data/apache_access.log.gz](sample-data/apache_access.log.gz) | Apache access log file used in Exercise 1 — 2M lines, Apr 1–17 2026 (gzip compressed, 39 MB → 427 MB uncompressed) |
 | [logstash/pipeline.conf](logstash/pipeline.conf) | Logstash pipeline configuration template for Exercise 1 |
+| [otel/collector-config.yml](otel/collector-config.yml) | OpenTelemetry Collector config — routes traces, metrics, and logs to Elastic Cloud |
+| [otel/docker-compose.override.yml](otel/docker-compose.override.yml) | Docker Compose override — mounts the custom collector config into the OTel Demo stack |
 
 ## Quick Start
 
@@ -91,7 +93,8 @@ Culture of frequent experimentation. Architecture must support **rapid changes a
 Prepare **diagrams** to visualize your architectural design.
 
 > **Template:** Download the [Elastic-branded PowerPoint template](presentations/goes-cloud-transformation-template.pptx) — 4 pre-structured slides with Elastic branding ready to fill in.
- These can represent:
+
+These can represent:
 - A step-by-step transformation process
 - Various aspects of the final (target) architecture
 
@@ -155,19 +158,76 @@ Use the Elastic platform to ingest and analyze a sample dataset — demonstratin
 
 ---
 
-#### Collect APM Traces (Spring Pet Clinic)
+#### Collect APM Traces (OpenTelemetry Demo Shop)
 
-The monitored application is **Spring Pet Clinic** (Java).
+The monitored application is the **[OpenTelemetry Demo (Astronomy Shop)](https://github.com/open-telemetry/opentelemetry-demo)** — a realistic microservices e-commerce application with ~20 services written in Go, Java, Python, .NET, Node.js, Ruby, PHP, and Rust. It ships with full OpenTelemetry instrumentation and a built-in load generator, so traces, metrics, and logs flow continuously without any manual interaction.
+
+**Data flow:**
+
+```
+Load Generator (Locust) → OTel Demo Services (~20)
+                                    ↓
+                        OpenTelemetry Collector
+                                    ↓
+                  Elastic Cloud  (APM · Metrics · Logs)
+```
 
 **Prerequisites:**
-- JDK 17
-- `JAVA_HOME` set
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + Docker Compose v2)
+- At least **6 GB RAM** allocated to Docker — check under Settings → Resources before starting
+- Your Elastic Cloud deployment running with its APM endpoint and API key ready
 
 **Steps:**
-1. Follow instructions in the [Spring Pet Clinic repo](https://github.com/spring-projects/spring-petclinic) to run the application
-2. Set up **Elastic APM** using the APM Agents tab in Kibana (detailed per-language instructions available there)
-3. Instrument using the **Java APM agent**
-4. Verify in **Observability → APM → Services**
+
+1. **Clone the demo** (outside this repo's directory) and check out a stable release:
+   ```bash
+   git clone https://github.com/open-telemetry/opentelemetry-demo.git
+   cd opentelemetry-demo
+   git checkout v1.12.0
+   ```
+
+2. **Copy in the Elastic configuration files** from this repo:
+   ```bash
+   cp /path/to/customer-architect-panel/otel/collector-config.yml ./collector-config.yml
+   cp /path/to/customer-architect-panel/otel/docker-compose.override.yml ./docker-compose.override.yml
+   ```
+
+3. **Edit `collector-config.yml`** — replace the two `REPLACE_WITH_YOUR_*` placeholders:
+   - `endpoint` — find yours in Kibana under **Observability → Add data → APM → OpenTelemetry**
+   - `Authorization` — create an API key in Kibana under **Stack Management → API Keys**, then encode it:
+     ```bash
+     echo -n "<id>:<secret>" | base64
+     ```
+
+4. **Start the stack** (first run pulls ~3 GB of images — do this before your interview):
+   ```bash
+   docker compose up --detach
+   ```
+
+5. **Verify telemetry is arriving** in Kibana:
+   - **Observability → APM → Services** — ~15 services should appear (cartservice, checkoutservice, frontend, productcatalogservice, etc.)
+   - **Observability → APM → Service Map** — live dependency graph across all services
+   - **Dashboards** — search for *OpenTelemetry Demo* for a prebuilt overview
+
+6. **Explore the running stack** locally:
+   - Storefront UI: `http://localhost:8080`
+   - Locust load generator UI: `http://localhost:8089`
+
+7. **Stop when done:**
+   ```bash
+   docker compose down
+   ```
+
+> **Troubleshooting:** If services appear in APM but metrics are missing, check the collector logs:
+> `docker compose logs otelcol --tail 50` — a `401 Unauthorized` means your API key or endpoint needs correcting.
+>
+> **Override not working?** Copy `collector-config.yml` directly over the demo's own config as a fallback:
+> `cp collector-config.yml src/otelcollector/otelcol-config.yml` — then run `docker compose up` without the override file.
+
+> **Bonus:** Pick one:
+> - Find a slow or high-error-rate service in the Service Map and drill into a distributed trace spanning at least 3 services — be ready to walk through the flame graph and explain what it shows
+> - Add a static resource attribute (e.g. `deployment.environment: interview`) to the collector config's `resource` processor and verify it appears on spans in Kibana
+> - Build a Kibana Lens visualization showing p99 latency over time for the `frontend` service and pin it to a dashboard alongside your Apache log visualizations
 
 ---
 
