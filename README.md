@@ -158,45 +158,45 @@ Use the Elastic platform to ingest and analyze a sample dataset — demonstratin
 
 ##### Analyse Logs with ES|QL
 
-Once your Apache data is indexed into `apache-access-logs-*`, build a three-panel ES|QL dashboard:
+Once your Apache data is indexed into `apache-access-logs-*`, use ES|QL to build a dashboard that tells a story about what the data reveals — **don't just visualise the data, demonstrate its value to a customer.**
 
 **In Kibana → Dashboards → Create dashboard → Add panel → ES|QL**
 
-1. **Top 10 Requested URLs** (horizontal bar chart):
-   ```esql
-   FROM apache-access-logs-*
-   | STATS request_count = COUNT(*) BY request
-   | SORT request_count DESC
-   | LIMIT 10
-   ```
+Think about what a business stakeholder would care about when looking at web traffic logs:
+- Where are users spending time, and where are they bouncing?
+- When does demand spike, and is the platform keeping up?
+- What does error behaviour reveal about reliability or potential threats?
+- Which parts of the product — shopping, streaming, payments — are driving the most load?
 
-2. **HTTP Status Code Distribution** (donut or pie):
-   ```esql
-   FROM apache-access-logs-*
-   | STATS count = COUNT(*) BY response
-   | SORT response ASC
-   ```
+Build a dashboard of at least 3 panels that answers questions like these. The panels below are **examples of the kind of analysis ES|QL enables** — use them as a starting point or inspiration, but the goal is a coherent narrative, not a checklist:
 
-3. **Request Volume by Hour** (line chart):
-   ```esql
-   FROM apache-access-logs-*
-   | EVAL hour = DATE_TRUNC(1 hour, @timestamp)
-   | STATS requests = COUNT(*) BY hour
-   | SORT hour ASC
-   ```
+```esql
+-- Request volume over time — is traffic behaving as expected?
+FROM apache-access-logs-*
+| EVAL hour = DATE_TRUNC(1 hour, @timestamp)
+| STATS requests = COUNT(*) BY hour
+| SORT hour ASC
+```
 
-Save the dashboard as **"Apache Log Analysis — ES|QL"** and be prepared to walk through what each panel reveals.
+```esql
+-- Error rate by endpoint — where is the platform failing users?
+FROM apache-access-logs-*
+| WHERE response >= 400
+| STATS errors = COUNT(*) BY request
+| SORT errors DESC
+| LIMIT 10
+```
+
+```esql
+-- Bandwidth by content type — what is driving egress cost?
+FROM apache-access-logs-*
+| STATS total_bytes = SUM(bytes) BY verb
+| SORT total_bytes DESC
+```
 
 > **Note on field names:** The `COMBINEDAPACHELOG` grok pattern produces `clientip`, `verb`, `request`, `response` (integer), and `bytes` (integer). Use these names in your ES|QL queries — they differ from ECS dot-notation.
 
-> **Bonus:** Add a fourth panel showing the top 5 client IPs generating 4xx or 5xx errors:
-> ```esql
-> FROM apache-access-logs-*
-> | WHERE response >= 400
-> | STATS errors = COUNT(*) BY clientip
-> | SORT errors DESC
-> | LIMIT 5
-> ```
+Be prepared to walk the panel through your dashboard and explain: *what would you tell a customer's VP of Engineering or Head of E-Commerce based on what you see here?*
 
 > **Bonus:** Create a single-metric **anomaly detection job** to detect unusually high or low request rates (create a data view over `apache-access-logs-*` first if needed)
 
