@@ -1,8 +1,22 @@
 # Part 1: Architectural Strategy for Cloud Transformation
 
-> **Duration:** 30–45 minutes
+> **Duration:** 30–45 minutes presenting · aim to wrap within 45 min to leave time for Part 2
 >
 > **Back to:** [Interview Briefing](README.md)
+
+---
+
+## Treat This Like a Customer Interaction
+
+This is not a whiteboard exercise — **treat the panel as if they are the actual GOES leadership team** in a real engagement. That means:
+
+- **Open with a brief recap** of your understanding of the problem before diving into solution
+- **Anchor your recommendations in GOES's actual business facts** — the numbers, constraints, and internal politics in the [Scenario Details](part-1-scenario-details.md) are what you're designing against
+- **Tailor your delivery** to who's in the room (developer, architect, VP, business stakeholder — each hears different things)
+- **Invite questions and pushback** — a great CA engagement is a conversation, not a monologue
+- **Close with clear next steps** — what follows this meeting? Workshops, POC scope, discovery deep-dives, timeline. Leaving without next steps means the customer doesn't know what to do Monday morning
+
+The panel is evaluating whether you'd be the kind of architect they'd trust to lead their own customers through a decision like this.
 
 ---
 
@@ -12,6 +26,8 @@
 - **Client:** GOES — Global, Online E-Commerce and Streaming Content Provider
 - **Current State:** On-premises (multiple physical data centers), self-managed
 - **Strategic Direction:** Transitioning to a hybrid cloud environment
+
+> **📄 [Scenario Details & Discovery Notes](part-1-scenario-details.md)** — concrete numbers, tech stack, budget, and constraints from the consultant's kickoff with GOES leadership. **Read this before designing your architecture** — it's what the panel will expect you to reference.
 
 ---
 
@@ -78,6 +94,18 @@ Prepare **diagrams** to visualize your architectural design. These can represent
 - Various aspects of the final (target) architecture
 
 > **Template:** Download the [Elastic-branded PowerPoint template](presentations/goes-cloud-transformation-template.pptx) — 4 pre-structured slides with Elastic branding ready to fill in.
+
+### Close With Clear Next Steps
+
+End your presentation with **concrete next steps** — what would you propose happens after this meeting? Be specific. For example:
+
+- A follow-up **discovery workshop** on payments + PCI scope (90 min, technical audience)
+- A **proof-of-concept** on the ticketing on-sale spike pattern (4-week scope, clear exit criteria)
+- A **target-state architecture deep-dive** with the enterprise architect
+- **Cost modelling** against the $120M transformation budget with finance
+- A **risk register** reviewed with the business stakeholder before Black Friday 2026
+
+The panel wants to see that you think beyond the meeting — a good customer engagement ends with the customer knowing exactly what happens Monday morning.
 
 ---
 

@@ -1,17 +1,22 @@
 # Customer Architect Panel — Interview Briefing
 
-> **Format:** 90-minute panel interview with 3–4 Elastic employees
+> **Format:** 90-minute panel interview with 3–4 Elastic employees — **target 75 minutes of content** to leave time for a real conversation at the end
 >
 > **Structure:** Two parts — architectural strategy + hands-on Elastic Stack
+>
+> **Mindset:** Treat this as a **real customer interaction**, not an academic exercise. The panel is evaluating whether you'd be the architect they'd trust to walk into their own customer's boardroom. Anchor recommendations in facts, tailor your delivery to the audience, and **close every conversation with clear next steps**.
 
 ---
 
 ## Interview Structure
 
-| Part | Topic | Duration |
+| Part | Topic | Target Duration |
 |------|-------|----------|
-| [Part 1 — Architecture Strategy](part-1-architecture.md) | Cloud transformation design for a fictional enterprise client | 30–45 min |
-| Part 2 — Elastic Stack Exercise | Hands-on data ingestion and analysis *(pick one track below)* | 45 min |
+| [Part 1 — Architecture Strategy](part-1-architecture.md) | Cloud transformation design for a fictional enterprise client | ~30 min |
+| Part 2 — Elastic Stack Exercise | Hands-on data ingestion and analysis *(pick one track below)* | ~45 min |
+| Panel Q&A + wrap-up | Discussion, questions, feedback | ~15 min |
+
+> ⏱️ **Time budget:** You have 90 minutes total. **Aim to deliver Parts 1 and 2 in 75 minutes** so there's room for conversation at the end — this is a panel, not a lecture.
 
 ### Choose One Track for Part 2
 
@@ -38,6 +43,7 @@
 | File | Description |
 |------|-------------|
 | [part-1-architecture.md](part-1-architecture.md) | GOES scenario, stakeholders, objectives, current-state diagram |
+| [part-1-scenario-details.md](part-1-scenario-details.md) | **GOES discovery notes** — concrete numbers, budget, constraints, and team politics to ground your Part 1 architecture |
 | [part-2-observability.md](part-2-observability.md) | Host metrics, Apache log ingest, OTel Demo Shop |
 | [part-2-search.md](part-2-search.md) | ELSER semantic search, RAG, AI Agent Builder |
 | [part-2-security.md](part-2-security.md) | Osquery, Security AI Assistant, Automated Response |
@@ -65,9 +71,10 @@
 
 ## General Notes
 
+- **Target 75 minutes of delivery** across Parts 1 + 2 — leave the remaining 15 minutes for panel Q&A and wrap-up
+- **Close every part with next steps** — what follows this meeting? Workshops, POCs, deep-dives, timelines. Don't leave the panel wondering what happens Monday morning
 - **Choose ONE exercise** for Part 2 — you will not have time for more than one in the 45-minute window
 - **Within your exercise**, sections marked *Intermediate* and *Advanced* represent two levels of depth — your interviewer will indicate which is expected, or you may choose based on your background
-- **Time management is critical** — aim to complete the core steps and leave 5–10 minutes for discussion; bonuses are optional
 - **Documentation may be imperfect** — working through ambiguity is part of what the panel is evaluating
 - **Prepare in advance:** OTel Demo image pulls (~3 GB), ELSER model deployment (5–10 min), and LLM API key setup should all be done the day before your interview
 - **Elastic Cloud trials expire after 14 days** — ensure your deployment is active the morning of your interview
