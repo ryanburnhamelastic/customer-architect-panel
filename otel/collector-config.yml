@@ -1,0 +1,61 @@
+# otel/collector-config.yml
+#
+# Drop this file into the root of your opentelemetry-demo/ directory alongside
+# docker-compose.override.yml. It replaces the demo's default collector config
+# and routes all telemetry (traces, metrics, logs) to your Elastic Cloud deployment.
+#
+# Only edit the lines marked TODO below — everything else is ready to go.
+# ─────────────────────────────────────────────────────────────────────────────
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 512
+    spike_limit_mib: 128
+  batch:
+    send_batch_size: 1000
+    timeout: 10s
+
+exporters:
+  # ─── Elastic Cloud ──────────────────────────────────────────────────────────
+  #
+  # Find your APM endpoint in Kibana:
+  #   Observability → Add data → APM → OpenTelemetry
+  #
+  # Endpoint format:
+  #   Classic deployment:  https://<deployment-id>.apm.<region>.aws.cloud.es.io
+  #   Serverless project:  https://<project-id>.apm.elastic.cloud
+  #
+  otlp/elastic:
+    endpoint: "https://REPLACE_WITH_YOUR_APM_ENDPOINT"   # TODO
+    headers:
+      # Option A — API Key (recommended)
+      #   Create one in Kibana → Stack Management → API Keys → Create API key
+      #   Then base64-encode it:  echo -n "<id>:<secret>" | base64
+      Authorization: "ApiKey REPLACE_WITH_YOUR_BASE64_API_KEY"  # TODO
+      #
+      # Option B — APM secret token (if you configured one in Kibana → APM)
+      # Authorization: "Bearer REPLACE_WITH_YOUR_SECRET_TOKEN"
+
+service:
+  pipelines:
+    traces:
+      receivers:  [otlp]
+      processors: [memory_limiter, batch]
+      exporters:  [otlp/elastic]
+    metrics:
+      receivers:  [otlp]
+      processors: [memory_limiter, batch]
+      exporters:  [otlp/elastic]
+    logs:
+      receivers:  [otlp]
+      processors: [memory_limiter, batch]
+      exporters:  [otlp/elastic]
