@@ -8,49 +8,49 @@
 
 ## Objective
 
-Use Elastic's search and AI capabilities to build a semantic search experience over a product catalogue — then extend it into a retrieval-augmented generation (RAG) pipeline and an autonomous AI agent.
+Build a working search application and AI chatbot powered by Elastic — demonstrating how semantic and hybrid search, retrieval-augmented generation, and a real frontend come together into a production-grade search experience.
 
 ### What the Panel is Looking For
 
-- Walk through your **process and findings**
-- Explain your choices and the challenges you encountered
-- Discuss what your **search results** reveal about the difference between keyword and semantic matching
-- Demonstrate the ability to build and explain an AI-powered search architecture
+- Walk through your **architecture and implementation choices**
+- Explain the difference between BM25, semantic, and hybrid search — and when each wins
+- Demonstrate a **live chatbot or search UI** grounded in your chosen dataset
+- Discuss how you would take this to a customer
 
 ---
 
 ## Prerequisites
 
 - Elastic Cloud trial deployment running
-- Python 3.9+ installed locally
-- At least **8 GB RAM** on your Elasticsearch deployment (the ELSER model loads in Elasticsearch — no local GPU needed)
-
-The dataset for this exercise is **[sample-data/product-catalog.json](sample-data/product-catalog.json)** — 500 product records across 6 categories (footwear, apparel, electronics, camping, nutrition, accessories) with rich prose descriptions designed to demonstrate the advantage of semantic search over keyword matching.
+- Python 3.9+ and `pip` installed
+- Node.js 18+ and `yarn` installed (for the frontend)
+- An LLM API key (OpenAI, Azure OpenAI, Amazon Bedrock, Google Gemini, or any Langchain-supported provider)
+- At least **8 GB RAM** on your Elasticsearch deployment (ELSER loads in Elasticsearch — no local GPU needed)
 
 ---
 
-## Intermediate: Semantic Search with ELSER
+## Choose Your Dataset
 
-1. **Index the catalogue with a keyword mapping** (your BM25 baseline):
-   ```json
-   PUT product-catalog-keyword
-   {
-     "mappings": {
-       "properties": {
-         "title":       { "type": "text" },
-         "description": { "type": "text" },
-         "category":    { "type": "keyword" }
-       }
-     }
-   }
-   ```
-   Bulk-index `product-catalog.json` via Kibana Dev Tools or `curl`.
+Pick one of the following — you'll use it for both the search and chatbot steps:
 
-2. **Deploy ELSER** in Kibana → **Machine Learning → Trained Models** → find `.elser_model_2_linux-x86_64` → Deploy. Wait for status **Started** (~2–5 minutes on a trial deployment). If unavailable, use `e5-small-v2` as an alternative.
+| Option | Description |
+|--------|-------------|
+| **A — Product Catalogue** | Use the provided [`sample-data/product-catalog.json`](sample-data/product-catalog.json) — 500 e-commerce product records with rich prose descriptions across 6 categories |
+| **B — Crawl a Website** | Use the [Elastic Web Crawler](https://www.elastic.co/guide/en/elasticsearch/reference/current/es-connectors-web-crawler.html) (available in Kibana → Search → Connectors) to crawl a public site of your choosing — a docs site, blog, or product catalogue works well |
+
+> **Tip on Option B:** The web crawler runs inside Kibana and populates an index automatically. Pick a site with rich text content (not heavy JavaScript-rendered SPAs) for best results. Allow 10–15 minutes for crawling before the next steps.
+
+---
+
+## Step 1 — Ingest and Index with ELSER
+
+### Option A — Product Catalogue
+
+1. **Deploy ELSER** — Kibana → **Machine Learning → Trained Models** → find `.elser_model_2_linux-x86_64` → Deploy. Wait for status **Started** (~2–5 min). Use `e5-small-v2` as an alternative if unavailable.
 
    > **Tip:** If the model cannot be deployed, upgrade the ML node to at least 2 GB in your deployment settings.
 
-3. **Create a semantic index:**
+2. **Create an index with a semantic mapping:**
    ```json
    PUT product-catalog-semantic
    {
@@ -67,91 +67,148 @@ The dataset for this exercise is **[sample-data/product-catalog.json](sample-dat
    }
    ```
 
-4. **Reindex through the model** — Elasticsearch calls the inference endpoint automatically during indexing when `semantic_text` fields are present. Expect 3–10 minutes for 500 documents on a trial cluster.
+3. **Bulk-index the catalogue** via Kibana Dev Tools or `curl`. Elasticsearch automatically generates sparse embeddings via the `semantic_text` inference pipeline. Expect 3–10 minutes for 500 documents on a trial cluster.
 
-5. **Compare results side by side.** Run both queries and discuss the difference:
+### Option B — Web Crawler
 
-   Keyword (BM25):
+1. In Kibana → **Search → Connectors → Web Crawler** → create a new crawler, enter your target domain, and start a crawl.
+2. The crawler creates an index automatically. Once crawling is complete, verify documents in **Discover**.
+3. **Add a semantic field** to the body/content field by creating a new index with `semantic_text` and reindexing:
    ```json
-   GET product-catalog-keyword/_search
+   POST _reindex
    {
-     "query": {
-       "multi_match": {
-         "query": "comfortable outdoor footwear for hiking",
-         "fields": ["title", "description"]
-       }
-     }
+     "source": { "index": "your-crawler-index" },
+     "dest":   { "index": "your-semantic-index" }
    }
    ```
 
-   Semantic:
-   ```json
-   GET product-catalog-semantic/_search
-   {
-     "query": {
-       "semantic": {
-         "field": "description",
-         "query": "comfortable outdoor footwear for hiking"
-       }
-     }
-   }
-   ```
+---
 
-   Document 2–3 examples where semantic results are more relevant. Be ready to explain *why* — token matching vs embedding proximity in vector space.
+## Step 2 — Build a Hybrid Search Experience
 
-> **Bonus:** Open **Search → Playground**, connect it to `product-catalog-semantic`, and use the Playground UI to test conversational search against your catalogue. Explain the Playground's role in validating a search experience before it reaches a production application.
+With your data indexed, build a search experience that combines BM25 keyword matching with ELSER semantic search using **Reciprocal Rank Fusion (RRF)**.
+
+### Run a Hybrid Query
+
+```json
+GET product-catalog-semantic/_search
+{
+  "retriever": {
+    "rrf": {
+      "retrievers": [
+        {
+          "standard": {
+            "query": {
+              "multi_match": {
+                "query": "lightweight gear for wet weather",
+                "fields": ["title", "description"]
+              }
+            }
+          }
+        },
+        {
+          "standard": {
+            "query": {
+              "semantic": {
+                "field": "description",
+                "query": "lightweight gear for wet weather"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**Compare the three approaches side by side** — run the same query as pure BM25, pure semantic, and hybrid RRF. Document 2–3 examples where hybrid outperforms either approach alone. Be ready to explain *why* — complementary signals, long-tail intent, vocabulary mismatch.
+
+> **Reference:** The [Search Tutorial on Elastic Search Labs](https://www.elastic.co/search-labs/tutorials/search-tutorial/welcome) walks through building a full Flask + Python search app with BM25, vector search, semantic search, and RRF hybrid ranking — use it as a guide for your frontend in Step 3.
 
 ---
 
-## Advanced: Retrieval-Augmented Generation (RAG)
+## Step 3 — Build a Frontend
 
-**Additional prerequisites:**
-- An LLM API key for a provider supported by Kibana Connectors (OpenAI, Azure OpenAI, Amazon Bedrock, Google Gemini, etc.)
-- Intermediate track completed (`product-catalog-semantic` index exists)
+Build a simple working UI that demonstrates your search experience. This doesn't need to be polished — it needs to be **functional and explainable**.
 
-1. **Configure an LLM connector** in Kibana → **Stack Management → Connectors → Create connector** → select your LLM provider → enter your API key.
+**Primary resource:** Follow the [Elastic Search Labs Chatbot Tutorial](https://www.elastic.co/search-labs/tutorials/chatbot-tutorial/welcome) — it provides a complete Flask + React/TypeScript starter app with Elasticsearch and Langchain wiring already done. Adapt it to your dataset.
 
-2. **Open Search → Playground** → select `product-catalog-semantic` → connect to the LLM connector you just created.
+```bash
+# Clone the tutorial's starter app
+git clone https://github.com/elastic/elasticsearch-labs
+cd elasticsearch-labs/examples/chatbot-rag-app
+```
 
-3. **Demonstrate grounded retrieval:**
-   - Ask: *"What products do you carry for trail running?"*
-   - Observe the **Context** panel — it shows which documents Elasticsearch retrieved before the LLM generated its response
-   - Toggle off context and ask the same question — the LLM falls back to generic, ungrounded answers
-   - The contrast illustrates the core value proposition of RAG
+### What to Build
 
-4. **Show the architecture:** Explain the three components — retriever (Elasticsearch semantic search), context builder (Playground / application layer), generator (LLM) — and how a customer would reproduce this using the Elasticsearch client and the `_search` + inference APIs.
+Choose one (or both if time allows):
 
-5. Click **View code** in the Playground to show the Python or JavaScript equivalent. Walk through the request structure.
+| UI Type | Description |
+|---------|-------------|
+| **Search interface** | Search box + results list — queries your hybrid index, shows ranked results with title, snippet, and category/source |
+| **Chatbot** | Conversational interface — uses RAG to answer questions grounded in your indexed content, with source citations |
 
-> **Bonus — Grounded RAG:** Set a custom system prompt that instructs the LLM to answer only using the retrieved context: *"If the answer is not contained in the provided context, say: I don't have that information."* Show how this prevents hallucination — the "grounded RAG" pattern used in production deployments.
+> **Playground is a validation tool, not the deliverable.** Use Kibana → **Search → Playground** to verify your index and prompts work before wiring them into your frontend — but the panel wants to see a real application, not the Playground UI.
+
+### Minimum Viable Backend (Python/Flask)
+
+```python
+from flask import Flask, request, jsonify
+from elasticsearch import Elasticsearch
+
+app = Flask(__name__)
+es = Elasticsearch(cloud_id="YOUR_CLOUD_ID", basic_auth=("elastic", "YOUR_PASSWORD"))
+
+@app.route("/search")
+def search():
+    q = request.args.get("q", "")
+    resp = es.search(index="product-catalog-semantic", body={
+        "retriever": {
+            "rrf": {
+                "retrievers": [
+                    {"standard": {"query": {"multi_match": {"query": q, "fields": ["title", "description"]}}}},
+                    {"standard": {"query": {"semantic": {"field": "description", "query": q}}}}
+                ]
+            }
+        }
+    })
+    hits = [{"title": h["_source"]["title"], "description": h["_source"]["description"]} for h in resp["hits"]["hits"]]
+    return jsonify(hits)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+### Adding the Chatbot Layer
+
+To extend your search app into a RAG chatbot, the [Chatbot Tutorial](https://www.elastic.co/search-labs/tutorials/chatbot-tutorial/welcome) covers:
+
+1. **LLM connector** — add your API key via environment variable (`python-dotenv`)
+2. **Langchain RAG chain** — retrieves from Elasticsearch, passes context to the LLM, returns grounded answers
+3. **Chat history** — maintaining multi-turn conversation context across exchanges
+4. **React/TypeScript frontend** — the starter repo includes a chat UI ready to connect to your Flask backend
 
 ---
 
-## Agent Builder
+## Step 4 — Demo and Discussion
 
-Once you have semantic search working, use Elastic's **AI Agent Builder** to create an intelligent assistant that can autonomously decide when to query your product catalogue.
+Walk the panel through a **live demo** of your running application. Cover:
 
-1. **Navigate to the Agent Builder** in Kibana → **Search → AI Search → Agents** (exact path varies by deployment version — search "Agent Builder" in the Kibana navigation if needed).
+1. **Architecture walkthrough** — how does a query flow from the UI through Elasticsearch to the LLM and back?
+2. **Hybrid vs keyword vs semantic** — show a query where hybrid wins and explain why
+3. **Grounding** — show what happens when the LLM is asked something not in your index (it should say so)
+4. **Production path** — how would a customer deploy this? What would you change before it goes live?
 
-2. **Create a new agent** with a system prompt:
-   > *You are a product search assistant for GOES, a global e-commerce company. When a customer asks about products, use the search tool to find relevant items from the catalogue and answer accurately based on those results. If no relevant products are found, say so clearly.*
+---
 
-3. **Add the product catalogue as a search tool:**
-   - Tool name: `product_search`
-   - Index: `product-catalog-semantic`
-   - Description: *"Search the GOES product catalogue by description. Use this tool whenever the user asks about products, categories, or recommendations."*
-   - Connect to the same LLM connector from the RAG step
+## Resources
 
-4. **Test the agent with queries that require tool use:**
-   - *"What waterproof options do you have for camping in the rain?"*
-   - *"I need something for cold weather running — what do you recommend?"*
-   - *"Do you have any nutrition products for endurance athletes?"*
-
-   Observe the **agent reasoning loop**: the LLM decides to call `product_search`, receives results, then formulates a grounded response. This is the key difference from a static RAG pipeline — the agent has autonomy over *when* and *how many times* to call tools.
-
-5. **Discuss the architecture:** How does an AI agent differ from a standard RAG pipeline? When would you use one over the other? What are the tradeoffs around latency, cost, and unpredictability?
-
-> **Bonus:** Add a second tool — a static `get_category_list` tool that returns the six available product categories. Show how the agent uses multiple tools in a single conversation to answer a compound question like *"What categories do you carry, and what are your best electronics for outdoor use?"*
+- [Elastic Search Labs](https://www.elastic.co/search-labs)
+- [Chatbot Tutorial](https://www.elastic.co/search-labs/tutorials/chatbot-tutorial/welcome) — Flask + React RAG chatbot starter
+- [Search Tutorial](https://www.elastic.co/search-labs/tutorials/search-tutorial/welcome) — BM25 → vector → semantic → hybrid RRF walkthrough
+- [Elasticsearch Python client](https://www.elastic.co/guide/en/elasticsearch/client/python-api/current/index.html)
+- [Web Crawler docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/es-connectors-web-crawler.html)
 
 ---
 
