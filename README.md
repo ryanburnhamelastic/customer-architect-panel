@@ -12,11 +12,11 @@
 
 | Part | Topic | Target Duration |
 |------|-------|----------|
-| [Part 1 — Architecture Strategy](part-1-architecture.md) | Cloud transformation design for a fictional enterprise client | ~30 min |
-| Part 2 — Elastic Stack Exercise | Hands-on data ingestion and analysis *(pick one track below)* | ~45 min |
-| Panel Q&A + wrap-up | Discussion, questions, feedback | ~15 min |
+| [Part 1 — Architecture Strategy](part-1-architecture.md) | Cloud transformation design for a fictional enterprise client | ~35 min |
+| Part 2 — Elastic Stack Exercise | Hands-on data ingestion and analysis *(pick one track below)* | ~35 min |
+| Panel Q&A + wrap-up | Discussion, questions, feedback | ~20 min |
 
-> ⏱️ **Time budget:** You have 90 minutes total. **Aim to deliver Parts 1 and 2 in 75 minutes** so there's room for conversation at the end — this is a panel, not a lecture.
+> ⏱️ **Time budget:** You have 90 minutes total. **Aim to deliver Parts 1 and 2 in ~70 minutes** — roughly 35 minutes each — so there's a full 20 minutes for conversation at the end. This is a panel, not a lecture.
 
 ### Choose One Track for Part 2
 
@@ -74,7 +74,7 @@
 
 ## General Notes
 
-- **Target 75 minutes of delivery** across Parts 1 + 2 — leave the remaining 15 minutes for panel Q&A and wrap-up
+- **Target ~35 minutes per part** — roughly equal time for Part 1 and Part 2, leaving 20 minutes for panel Q&A and wrap-up
 - **Close every part with next steps** — what follows this meeting? Workshops, POCs, deep-dives, timelines. Don't leave the panel wondering what happens Monday morning
 - **Choose ONE exercise** for Part 2 — you will not have time for more than one in the 45-minute window
 - **Within your exercise**, sections marked *Intermediate* and *Advanced* represent two levels of depth — your interviewer will indicate which is expected, or you may choose based on your background

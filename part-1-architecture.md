@@ -1,6 +1,6 @@
 # Part 1: Architectural Strategy for Cloud Transformation
 
-> **Duration:** 30–45 minutes presenting · aim to wrap within 45 min to leave time for Part 2
+> **Duration:** ~35 minutes — aim to stay within this to give Part 2 equal time
 >
 > **Back to:** [Interview Briefing](README.md)
 
