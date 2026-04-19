@@ -11,7 +11,7 @@
 This is not a whiteboard exercise — **treat the panel as if they are the actual GOES leadership team** in a real engagement. That means:
 
 - **Open with a brief recap** of your understanding of the problem before diving into solution
-- **Anchor your recommendations in GOES's actual business facts** — the numbers, constraints, and internal politics in the [Scenario Details](part-1-scenario-details.md) are what you're designing against
+- **Anchor your recommendations in GOES's actual business facts** — the discovery materials below are what you're designing against; the panel will expect you to have read and synthesised them
 - **Tailor your delivery** to who's in the room (developer, architect, VP, business stakeholder — each hears different things)
 - **Invite questions and pushback** — a great CA engagement is a conversation, not a monologue
 - **Close with clear next steps** — what follows this meeting? Workshops, POC scope, discovery deep-dives, timeline. Leaving without next steps means the customer doesn't know what to do Monday morning
@@ -27,7 +27,16 @@ The panel is evaluating whether you'd be the kind of architect they'd trust to l
 - **Current State:** On-premises (multiple physical data centers), self-managed
 - **Strategic Direction:** Transitioning to a hybrid cloud environment
 
-> **📄 [Scenario Details & Discovery Notes](part-1-scenario-details.md)** — concrete numbers, tech stack, budget, and constraints from the consultant's kickoff with GOES leadership. **Read this before designing your architecture** — it's what the panel will expect you to reference.
+### Discovery Materials
+
+Read all four documents before designing your architecture. Together they contain everything you need — but you'll have to synthesise it yourself.
+
+| Document | What it is |
+|----------|-----------|
+| 📋 [AE Handoff Notes](part-1-ae-handoff.md) | Internal prep from the account exec — relationship history, stakeholder dynamics, competitive context, watch-outs |
+| 📰 [Press Release](part-1-press-release.md) | GOES's public announcement of the transformation programme — what they want the world to believe |
+| 🎙️ [Discovery Call Transcript](part-1-discovery-call.md) | Edited transcript of the initial discovery session with GOES leadership |
+| 📰 [News Article](part-1-news-article.md) | External reporting on the ticketing platform failure — the incident that accelerated the programme |
 
 ---
 

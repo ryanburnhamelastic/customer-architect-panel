@@ -42,8 +42,11 @@
 
 | File | Description |
 |------|-------------|
-| [part-1-architecture.md](part-1-architecture.md) | GOES scenario, stakeholders, objectives, current-state diagram |
-| [part-1-scenario-details.md](part-1-scenario-details.md) | **GOES discovery notes** — concrete numbers, budget, constraints, and team politics to ground your Part 1 architecture |
+| [part-1-architecture.md](part-1-architecture.md) | GOES scenario, stakeholders, objectives, current-state diagram, deliverable |
+| [part-1-ae-handoff.md](part-1-ae-handoff.md) | Internal AE prep notes — relationship history, stakeholder dynamics, competitive context |
+| [part-1-press-release.md](part-1-press-release.md) | GOES public announcement of the transformation programme |
+| [part-1-discovery-call.md](part-1-discovery-call.md) | Edited transcript of the initial discovery session with GOES leadership |
+| [part-1-news-article.md](part-1-news-article.md) | External news coverage of the GOES ticketing platform failure |
 | [part-2-observability.md](part-2-observability.md) | Host metrics, Apache log ingest, OTel Demo Shop |
 | [part-2-search.md](part-2-search.md) | ELSER semantic search, RAG, AI Agent Builder |
 | [part-2-security.md](part-2-security.md) | Osquery, Security AI Assistant, Automated Response |
